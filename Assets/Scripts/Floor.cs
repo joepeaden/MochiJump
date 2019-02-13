@@ -25,6 +25,12 @@ public class Floor : MovingObject
 		{
 			other.gameObject.GetComponent<Player>().GameOver();
 		}
+        
+        // clean up old platforms as they are passed
+        if(other.tag == "Platform")
+        {
+            Destroy(other.gameObject);
+        }
 	}
 
 	public override void Reset()

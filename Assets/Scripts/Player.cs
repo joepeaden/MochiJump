@@ -84,7 +84,7 @@ public class Player : MovingObject
 
 		// regenerate level
 		LevelGenerator.ClearEnvironment();
-		LevelGenerator.GenerateChunk(false);
+		LevelGenerator.GeneratePlatform(true);
 	}
 
 	private void UpdateScore()

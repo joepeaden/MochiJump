@@ -9,6 +9,8 @@ TagManager:
   - RestartButton
   - Canvas
   - FinalScoreText
+  - LevelGenerator
+  - Platform
   layers:
   - Default
   - TransparentFX

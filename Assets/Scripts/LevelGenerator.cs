@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-	private static GameObject platform, environment, mainCamera;
+	private static GameObject environment, platform, mainCamera;
 
-	private static List<GameObject[]> existingChunks;
+    private static Vector2 dimensions;
 
-	private static Vector2 dimensions;
-
-	private static float newChunkTrigger, deltaYPosition;
+	private static float lastPlatPos;
 
 	void Start()
     {
@@ -21,40 +19,12 @@ public class LevelGenerator : MonoBehaviour
 		// need dimensions to generate new chunks, & dimensions do not change
 		dimensions = mainCamera.GetComponent<BoxCollider2D>().size;
 
-		// initial trigger is at 1/2 height of the dimensions of the boundary
-		// newChunkTrigger = dimensions.y/2;
-
 		environment = new GameObject("Environment");
     
         GeneratePlatform(true);
-        
-        //GenerateChunk(true);
     }
-
-	void Update()
-	{
-	//	// cameraPos changes each frame
-	//	Vector3 cameraPos = mainCamera.GetComponent<Transform>().position;
-
-	//	if(cameraPos.y >= newChunkTrigger)
-	//	{
-	//		// get change in camera y position, to set new chunk trigger
-	//		deltaYPosition = cameraPos.y - deltaYPosition;
-
-	//		GenerateChunk(false);
-
-	//		newChunkTrigger += deltaYPosition;
-
-	//		// don't need to hold on to chunks no longer being used
-	//		if(existingChunks.Count >= 4)
-	//			DeleteOldChunk();
-		
-	//		// restart movement counting
-	//		deltaYPosition = cameraPos.y;
-	//	}
-	}
-
-    public void GeneratePlatform(bool gameStart)
+    
+    public static void GeneratePlatform(bool gameStart)
     {
         // need size to spawn for length of camera
         float sizeX = mainCamera.GetComponent<Camera>().orthographicSize;
@@ -65,84 +35,99 @@ public class LevelGenerator : MonoBehaviour
         // vertical spacing of platforms
         int spacing = 6;
 
+        float range = sizeX / 2;
+
+        // positions for spawning platform
+        float posx = Random.Range(-range, range);
+        float posy = lastPlatPos + spacing;
+
+        // if not at game start, just spawn a single platform, then break 
+        if (!gameStart)
+        {
+            GameObject currentPlatform = Instantiate(platform, new Vector3(posx, posy, 0), Quaternion.identity, environment.transform);
+
+            // save last position to make new platform in correct place
+            lastPlatPos = currentPlatform.transform.position.y;
+
+            return;
+        }
+
+        // if at game start, then spawn collection of platforms
         for (int i = 0; i < sizeY; i++)
         {
+            posx = Random.Range(-range, range);
+            posy = 0 + i;
+            GameObject currentPlatform = null;
+
             // every <spacing value> units, spawn a platform with a random x position
             if (i % spacing == 0 && i != 0)
-            {
-                float posy = 0 + i;
-                float range = sizeX / 2;
-                float posx = Random.Range(-range, range);
-
+            {            
                 // put all of the platforms under the environment parent object
-                GameObject currentPlatform = Instantiate(platform, new Vector3(posx, posy, 0), Quaternion.identity, environment.transform);
-
-                //chunk[platformIndex] = currentPlatform;
-                //platformIndex++;
+                currentPlatform = Instantiate(platform, new Vector3(posx, posy, 0), Quaternion.identity, environment.transform);
             }
 
-            if (!gameStart)
-                // break out of loop, to only generate single platform
-                break;
+            // save last position to make new platform in correct place
+            if(currentPlatform != null)
+                lastPlatPos = currentPlatform.transform.position.y;
         }
     }
 
-	private void DeleteOldChunk()
-	{
-		for(int i = 0; i < existingChunks[0].Length; i++)
-			Destroy(existingChunks[0][i]);
+    public static void ClearEnvironment()
+    {
+        Transform tf = environment.transform;
 
-		existingChunks.RemoveAt(0);
-	}
-		
-	public static void GenerateChunk(bool firstChunk)
-	{
-		float baseHeight;
-		if(firstChunk)
-			// if first chunk, spawn starting at camera position
-			baseHeight = mainCamera.GetComponent<Transform>().position.y;
-		else
-			baseHeight = mainCamera.GetComponent<Transform>().position.y + dimensions.y/2;
-		
-		// vertical spacing of platforms
-		int spacing = 6;
+        // clear all of the platforms spawned
+        for (int i = 0; i < tf.childCount; i++)
+        {
+            Destroy(tf.GetChild(i).gameObject);
+        }
+    }
 
-		if(existingChunks == null)
-			existingChunks = new List<GameObject[]>();
+    //private void DeleteOldChunk()
+    //{
+    //	for(int i = 0; i < existingChunks[0].Length; i++)
+    //		Destroy(existingChunks[0][i]);
 
-		int platformIndex = 0;
-		int numBlocks = (int) dimensions.y / spacing; 
-		GameObject[] chunk = new GameObject[numBlocks];
+    //	existingChunks.RemoveAt(0);
+    //}
 
-		for(int i = 0; i < dimensions.y; i++)
-		{
-			// every <spacing value> units, spawn a platform with a random x position
-			if(i % spacing == 0 && i != 0)
-			{
-				float posy = baseHeight + i;
-				float range = dimensions.x/2;
-				float posx = Random.Range(-range, range);
+    //public static void GenerateChunk(bool firstChunk)
+    //{
+    //	float baseHeight;
+    //	if(firstChunk)
+    //		 if first chunk, spawn starting at camera position
+    //		baseHeight = mainCamera.GetComponent<Transform>().position.y;
+    //	else
+    //		baseHeight = mainCamera.GetComponent<Transform>().position.y + dimensions.y/2;
 
-				// put all of the platforms under the environment parent object
-				GameObject currentPlatform = Instantiate(platform, new Vector3(posx,posy,0), Quaternion.identity, environment.transform);					
+    //	 vertical spacing of platforms
+    //	int spacing = 6;
 
-				chunk[platformIndex] = currentPlatform;
-				platformIndex++;
-			}
-		}
+    //	if(existingChunks == null)
+    //		existingChunks = new List<GameObject[]>();
 
-		// add chunk to list of chunks
-		existingChunks.Add(chunk);
-	}
+    //	int platformIndex = 0;
+    //	int numBlocks = (int) dimensions.y / spacing; 
+    //	GameObject[] chunk = new GameObject[numBlocks];
 
-	public static void ClearEnvironment()
-	{
-		Transform tf = environment.transform;
+    //	for(int i = 0; i < dimensions.y; i++)
+    //	{
+    //		 every <spacing value> units, spawn a platform with a random x position
+    //		if(i % spacing == 0 && i != 0)
+    //		{
+    //			float posy = baseHeight + i;
+    //			float range = dimensions.x/2;
+    //			float posx = Random.Range(-range, range);
 
-		// clear all of the platforms spawned
-		for(int i = 0; i < tf.childCount; i++)
-		{
-			Destroy(tf.GetChild(i).gameObject);
-		}
-	}
+    //			 put all of the platforms under the environment parent object
+    //			GameObject currentPlatform = Instantiate(platform, new Vector3(posx,posy,0), Quaternion.identity, environment.transform);					
+
+    //			chunk[platformIndex] = currentPlatform;
+    //			platformIndex++;
+    //		}
+    //	}
+
+    //	 add chunk to list of chunks
+    //	existingChunks.Add(chunk);
+    //}
 }
