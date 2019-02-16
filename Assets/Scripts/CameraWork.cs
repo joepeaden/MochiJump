@@ -11,8 +11,13 @@ public class CameraWork : MovingObject
 	{
 		floor = GameObject.FindGameObjectWithTag("Floor");
 
-		// offset of camera to floor depends on size of camera, + 5 for player falling off screen
-		yOffset = (float) GetComponent<Camera>().orthographicSize + 5;
+        float orthoSize = (float)GetComponent<Camera>().orthographicSize;
+
+        // offset of camera to floor depends on size of camera, + 5 for player falling off screen
+        yOffset = orthoSize + 5;
+
+        // set height for which floor should catch up to player (thus moving the camera)
+        floor.GetComponent<Floor>().SetCatchupHeight(orthoSize);
 	}
 
 	void Update()
