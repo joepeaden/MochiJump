@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 2516175139688597866, guid: 8f3f6042079b9dc4b84068683fdba7e6,
         type: 3}
       propertyPath: m_Name
-      value: Starting Platform Variant
+      value: Starting Platform
       objectReference: {fileID: 0}
     - target: {fileID: 2516175139688597866, guid: 8f3f6042079b9dc4b84068683fdba7e6,
         type: 3}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-	private static GameObject environment, platform, mainCamera;
+	private static GameObject environment, basicPlatform, mainCamera, fallingPlatform;
 
     private static Vector2 dimensions;
 
@@ -12,9 +12,10 @@ public class LevelGenerator : MonoBehaviour
 
 	void Start()
     {
-		platform = Resources.Load<GameObject>("Prefabs/Platforms/BasicPlatform");
+		basicPlatform = Resources.Load<GameObject>("Prefabs/Platforms/BasicPlatform");
+        fallingPlatform = Resources.Load<GameObject>("Prefabs/Platforms/FallingPlatform");
 
-		mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
 		// need dimensions to generate new chunks, & dimensions do not change
 		dimensions = mainCamera.GetComponent<BoxCollider2D>().size;
@@ -33,13 +34,21 @@ public class LevelGenerator : MonoBehaviour
         float sizeY = sizeX + 10;
 
         // vertical spacing of platforms
-        int spacing = 6;
+        int spacing = 10;
 
         float range = sizeX / 2;
 
         // positions for spawning platform
         float posx = Random.Range(-range, range);
         float posy = lastPlatPos + spacing;
+
+        GameObject platform;
+
+        // deciding type of platform
+        if (Random.Range(0f, 3f) > 1)
+            platform = basicPlatform;
+        else
+            platform = fallingPlatform;
 
         // if not at game start, just spawn a single platform, then break 
         if (!gameStart)
