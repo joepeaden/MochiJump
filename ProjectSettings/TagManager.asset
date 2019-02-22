@@ -12,6 +12,8 @@ TagManager:
   - LevelGenerator
   - Platform
   - StartPlatform
+  - Money
+  - MoneyText
   layers:
   - Default
   - TransparentFX

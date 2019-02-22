@@ -21,11 +21,11 @@ public class InputHandler : MonoBehaviour
 	public Command HandleInput()
 	{
         //input for computer
-    
+
         //if (Input.GetAxis("Horizontal") > 0)
-        //        return rightButton;
-        //    else if (Input.GetAxis("Horizontal") < 0)
-        //        return leftButton;
+        //    return rightButton;
+        //else if (Input.GetAxis("Horizontal") < 0)
+        //    return leftButton;
 
         // input for mobile
 

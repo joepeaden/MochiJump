@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class Floor : MovingObject
 {
-	private float speed = 1;
+    private float speed = 1;
     private Transform playerTf;
     private float catchupHeight = 10;
     private Transform cameraTf;
-
-    public float increment = 0.01f;
-
+    
 	void Start()
 	{
 		SetStartPosition(transform.position);
@@ -19,7 +17,7 @@ public class Floor : MovingObject
         cameraTf = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
     }
 
-    // TOO hot to handle! I make more noise than HEAVY METAL!
+    // call me the rap ASASSINATOR!
     // WUUUU TANGGG
  
 	void Update()
@@ -31,11 +29,18 @@ public class Floor : MovingObject
         // NOTE: the speed could be calculated by the max player velocity, from the force applied by each platform
         //         ... more likely, will want to just make it follow the player directly
         if (playerTf.position.y > height)
-            transform.Translate(new Vector3(0f, 5f * Time.deltaTime, 0f)); 
+            transform.Translate(new Vector3(0f, 5f * Time.deltaTime, 0f));
 
-		//speed += increment;
+        UpdateSpeed(); 
 		transform.Translate(0, speed * Time.deltaTime, 0);
 	}
+
+    private void UpdateSpeed()
+    {
+        // good enough for now!
+        float increment = 0.001f;
+        speed += increment;        
+    }
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{

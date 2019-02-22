@@ -11,8 +11,6 @@ public class Player : MovingObject
 	private InputHandler inputHandler;
 	private int score = 0;
 	private Text scoreText;
-
-	// NOTE: Probably replace public variable at some point
 	private GameObject restartButton;
 
 	void Start()
@@ -23,8 +21,8 @@ public class Player : MovingObject
 		scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<Text>();
 		if(scoreText == null)
 			Debug.LogError("Player -> Start: Score text not found");
-
-		restartButton = GameObject.FindGameObjectWithTag("RestartButton");
+       
+        restartButton = GameObject.FindGameObjectWithTag("RestartButton");
 		if(restartButton == null)
 			Debug.LogError("Player -> Start: Restart button not found");
 		restartButton.SetActive(false);
@@ -44,7 +42,7 @@ public class Player : MovingObject
 		if(currentHeight > score)
 		{
 			score = currentHeight;
-			UpdateScore();
+			UpdateStats();
 		}
 	}
 
@@ -72,7 +70,7 @@ public class Player : MovingObject
 	{
 		// reset score to zero and update UI
 		score = 0;
-		UpdateScore();
+		UpdateStats();
 
 		// turn off modal
 		restartButton.SetActive(false);
@@ -87,8 +85,20 @@ public class Player : MovingObject
 		LevelGenerator.GeneratePlatform(true);
 	}
 
-	private void UpdateScore()
+	private void UpdateStats()
 	{
 		scoreText.text = "Score: " + score;
 	}
+
+    //private void SuperJump()
+    //{
+    //    // same that the platforms give
+    //    float thrust = 400f;
+
+    //    Rigidbody2D rb = GetComponent<Rigidbody2D>();
+
+    //    rb.velocity = Vector3.zero;
+    //    rb.AddForce(transform.up * thrust);
+    //}
+    
 }

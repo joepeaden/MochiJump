@@ -38,6 +38,7 @@ public class LevelGenerator : MonoBehaviour
 
         float range = sizeX / 2;
 
+        // float[] posx for the # of platforms decided at this height lvl
         // positions for spawning platform
         float posx = Random.Range(-range, range);
         float posy = lastPlatPos + spacing;
@@ -45,10 +46,11 @@ public class LevelGenerator : MonoBehaviour
         GameObject platform;
 
         // deciding type of platform
-        if (Random.Range(0f, 3f) > 1)
-            platform = basicPlatform;
-        else
+        // don't offer fallingPlatform as an option until certain point
+        if (posy >= 100f && Random.Range(0f, 3f) <= 1)
             platform = fallingPlatform;
+        else
+            platform = basicPlatform;
 
         // if not at game start, just spawn a single platform, then break 
         if (!gameStart)
@@ -92,51 +94,27 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    //private void DeleteOldChunk()
-    //{
-    //	for(int i = 0; i < existingChunks[0].Length; i++)
-    //		Destroy(existingChunks[0][i]);
-
-    //	existingChunks.RemoveAt(0);
-    //}
-
-    //public static void GenerateChunk(bool firstChunk)
-    //{
-    //	float baseHeight;
-    //	if(firstChunk)
-    //		 if first chunk, spawn starting at camera position
-    //		baseHeight = mainCamera.GetComponent<Transform>().position.y;
-    //	else
-    //		baseHeight = mainCamera.GetComponent<Transform>().position.y + dimensions.y/2;
-
-    //	 vertical spacing of platforms
-    //	int spacing = 6;
-
-    //	if(existingChunks == null)
-    //		existingChunks = new List<GameObject[]>();
-
-    //	int platformIndex = 0;
-    //	int numBlocks = (int) dimensions.y / spacing; 
-    //	GameObject[] chunk = new GameObject[numBlocks];
-
-    //	for(int i = 0; i < dimensions.y; i++)
-    //	{
-    //		 every <spacing value> units, spawn a platform with a random x position
-    //		if(i % spacing == 0 && i != 0)
-    //		{
-    //			float posy = baseHeight + i;
-    //			float range = dimensions.x/2;
-    //			float posx = Random.Range(-range, range);
-
-    //			 put all of the platforms under the environment parent object
-    //			GameObject currentPlatform = Instantiate(platform, new Vector3(posx,posy,0), Quaternion.identity, environment.transform);					
-
-    //			chunk[platformIndex] = currentPlatform;
-    //			platformIndex++;
-    //		}
-    //	}
-
-    //	 add chunk to list of chunks
-    //	existingChunks.Add(chunk);
-    //}
 }
+
+//class Level
+//{
+//    // min max spacing
+//    int minSpacing;
+//    int maxSpacing;
+
+//    // min and max platforms per height level
+//    int minPlatsX;
+//    int maxPlatsX;
+
+//    GameObject[] possiblePlatforms;
+
+//    public Level(int minSpacing, int maxSpacing, int minSpacing, int minPlatsX, GameObject[] possiblePlatforms)
+//    {
+//        this.minSpacing = minSpacing;
+//        this.maxSpacing = maxSpacing;
+//        this.minPlatsX = minPlatsX;
+//        this.maxPlatsX = maxPlatsX;
+//        this.possiblePlatforms = possiblePlatforms;
+//    }
+
+//}
