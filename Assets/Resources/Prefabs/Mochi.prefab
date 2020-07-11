@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 9213945994531855611}
   - component: {fileID: 9213945994531855607}
   - component: {fileID: 9213945994531855604}
+  - component: {fileID: 1354868340}
+  - component: {fileID: -616011055207289761}
   m_Layer: 0
   m_Name: Mochi
   m_TagString: Player
@@ -49,6 +51,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -60,6 +63,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -72,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bbf22e9b7321aaa4c8759409e129ebc4, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.105447054, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 69643d850a57a9b43a191fff60e74e5b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -95,9 +99,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.5
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.025
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -152,5 +156,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff2db7a1a9f38e8459b6f6094fb970ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1354868340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9213945994531855610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7d620c378b104439a14a939c0a160f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boostThrust: 400
+--- !u!114 &-616011055207289761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9213945994531855610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feea2b68a8953444292d3dd293da1bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

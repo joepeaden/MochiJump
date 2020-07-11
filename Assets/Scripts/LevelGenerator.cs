@@ -1,31 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-	private static GameObject environment, basicPlatform, mainCamera, fallingPlatform;
+	private GameObject environment, mainCamera;
 
-    private static Vector2 dimensions;
+    private GameObject basicPlatform, fallingPlatform, movingPlatform, bounceUpPlatform;
 
-	private static float lastPlatPos;
+    // would be const but need to set from editor
+    public float LEVEL_2_COUNT;
+    public float LEVEL_3_COUNT;
 
-	void Start()
+    // used for level
+    private int totalPlatformsTouched;
+
+    private float lastPlatPos;
+
+    void Start()
     {
-		basicPlatform = Resources.Load<GameObject>("Prefabs/Platforms/BasicPlatform");
-        fallingPlatform = Resources.Load<GameObject>("Prefabs/Platforms/FallingPlatform");
-
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
-		// need dimensions to generate new chunks, & dimensions do not change
-		dimensions = mainCamera.GetComponent<BoxCollider2D>().size;
+        basicPlatform = Resources.Load<GameObject>("Prefabs/Platforms/BasicPlatform");
+        fallingPlatform = Resources.Load<GameObject>("Prefabs/Platforms/FallingPlatform");
+        movingPlatform = Resources.Load<GameObject>("Prefabs/Platforms/MovingPlatform");
+        bounceUpPlatform = Resources.Load<GameObject>("Prefabs/Platforms/BounceUp");
 
-		environment = new GameObject("Environment");
+        environment = new GameObject("Environment");
     
         GeneratePlatform(true);
     }
     
-    public static void GeneratePlatform(bool gameStart)
+    public void GeneratePlatform(bool gameStart)
     {
         // need size to spawn for length of camera
         float sizeX = mainCamera.GetComponent<Camera>().orthographicSize;
@@ -45,45 +52,53 @@ public class LevelGenerator : MonoBehaviour
 
         GameObject platform;
 
-        // deciding type of platform
-        // don't offer fallingPlatform as an option until certain point
-        if (posy >= 100f && Random.Range(0f, 3f) <= 1)
-            platform = fallingPlatform;
-        else
-            platform = basicPlatform;
+        platform = GetPlatform();
 
         // if not at game start, just spawn a single platform, then break 
         if (!gameStart)
         {
             GameObject currentPlatform = Instantiate(platform, new Vector3(posx, posy, 0), Quaternion.identity, environment.transform);
 
+            currentPlatform.GetComponentInChildren<Platform>().UpdatePlatformsTouched = UpdatePlatformsTouched;
+
             // save last position to make new platform in correct place
             lastPlatPos = currentPlatform.transform.position.y;
-
-            return;
         }
-
-        // if at game start, then spawn collection of platforms
-        for (int i = 0; i < sizeY; i++)
+        else
         {
-            posx = Random.Range(-range, range);
-            posy = 0 + i;
-            GameObject currentPlatform = null;
+            // spawn initial platform
+            GameObject currentPlatform = Instantiate(basicPlatform, new Vector3(0f, -1.5f, 0f), Quaternion.identity, environment.transform);
+            currentPlatform.GetComponentInChildren<Platform>().UpdatePlatformsTouched = UpdatePlatformsTouched;
 
-            // every <spacing value> units, spawn a platform with a random x position
-            if (i % spacing == 0 && i != 0)
-            {            
-                // put all of the platforms under the environment parent object
-                currentPlatform = Instantiate(platform, new Vector3(posx, posy, 0), Quaternion.identity, environment.transform);
+            // if at game start, then spawn collection of platforms
+            for (int i = 0; i < sizeY; i++)
+            {
+                posx = Random.Range(-range, range);
+                posy = 0 + i;
+
+                // every <spacing value> units, spawn a platform with a random x position
+                if (i % spacing == 0 && i != 0)
+                {
+                    // put all of the platforms under the environment parent object
+                    currentPlatform = Instantiate(platform, new Vector3(posx, posy, 0), Quaternion.identity, environment.transform);
+
+                    currentPlatform.GetComponentInChildren<Platform>().UpdatePlatformsTouched = UpdatePlatformsTouched;
+                }
+
+                // save last position to make new platform in correct place
+                if (currentPlatform != null)
+                    lastPlatPos = currentPlatform.transform.position.y;
             }
-
-            // save last position to make new platform in correct place
-            if(currentPlatform != null)
-                lastPlatPos = currentPlatform.transform.position.y;
         }
     }
 
-    public static void ClearEnvironment()
+    // Will be updated by platforms when they are touched by player.
+    public void UpdatePlatformsTouched()
+    {
+        totalPlatformsTouched++;
+    }
+
+    public void ClearEnvironment()
     {
         Transform tf = environment.transform;
 
@@ -92,29 +107,39 @@ public class LevelGenerator : MonoBehaviour
         {
             Destroy(tf.GetChild(i).gameObject);
         }
+
+        totalPlatformsTouched = 0;
     }
 
+    public GameObject GetPlatform()
+    {
+        float value = Random.Range(0f, 100f);
+
+        if (totalPlatformsTouched > LEVEL_3_COUNT)
+        {
+            Debug.Log("LVL 3");
+            if (value > 75f)
+            {
+                return movingPlatform;
+            }
+            else if (value > 25f)
+            {
+                return fallingPlatform;
+            }
+            return basicPlatform;
+        }
+        else
+        if (totalPlatformsTouched > LEVEL_2_COUNT)
+        {
+
+            Debug.Log("LVL 2");
+            if (value > 75f)
+            {
+                return fallingPlatform;
+            }
+            return basicPlatform;
+        }
+
+        return basicPlatform;
+    }
 }
-
-//class Level
-//{
-//    // min max spacing
-//    int minSpacing;
-//    int maxSpacing;
-
-//    // min and max platforms per height level
-//    int minPlatsX;
-//    int maxPlatsX;
-
-//    GameObject[] possiblePlatforms;
-
-//    public Level(int minSpacing, int maxSpacing, int minSpacing, int minPlatsX, GameObject[] possiblePlatforms)
-//    {
-//        this.minSpacing = minSpacing;
-//        this.maxSpacing = maxSpacing;
-//        this.minPlatsX = minPlatsX;
-//        this.maxPlatsX = maxPlatsX;
-//        this.possiblePlatforms = possiblePlatforms;
-//    }
-
-//}

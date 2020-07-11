@@ -12,10 +12,13 @@ public class Player : MovingObject
 	private int score = 0;
 	private Text scoreText;
 	private GameObject restartButton;
+	private LevelGenerator levelGenerator;
 
 	void Start()
 	{
 		inputHandler = GetComponent<InputHandler>();
+
+		levelGenerator = GameObject.FindGameObjectWithTag("LevelGenerator").GetComponent<LevelGenerator>();
 
 		// hopefully throwing these errors will help with debugging
 		scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<Text>();
@@ -72,6 +75,10 @@ public class Player : MovingObject
 		score = 0;
 		UpdateStats();
 
+		// reset gameplay effects
+		GetComponent<PlayerBoost>().BoostMeter = 0;
+		GetComponent<PlayerBouncer>().Reset();
+
 		// turn off modal
 		restartButton.SetActive(false);
 
@@ -81,24 +88,12 @@ public class Player : MovingObject
 			obj.Reset();
 
 		// regenerate level
-		LevelGenerator.ClearEnvironment();
-		LevelGenerator.GeneratePlatform(true);
+		levelGenerator.ClearEnvironment();
+		levelGenerator.GeneratePlatform(true);
 	}
 
 	private void UpdateStats()
 	{
 		scoreText.text = "Score: " + score;
 	}
-
-    //private void SuperJump()
-    //{
-    //    // same that the platforms give
-    //    float thrust = 400f;
-
-    //    Rigidbody2D rb = GetComponent<Rigidbody2D>();
-
-    //    rb.velocity = Vector3.zero;
-    //    rb.AddForce(transform.up * thrust);
-    //}
-    
 }

@@ -16,7 +16,7 @@ public class PlatformTrigger : MovingObject
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
-            LevelGenerator.GeneratePlatform(false);
+            levelGenerator.GeneratePlatform(false);
 
         transform.Translate(new Vector3(0f, 5f, 0f));
     }
