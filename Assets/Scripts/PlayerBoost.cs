@@ -11,17 +11,27 @@ public class PlayerBoost : MonoBehaviour
     private float boostThrust = 800f;
     
     private int boostMeter = 0;
-    
+
+    private PlayerVisuals visuals;
+
     public int BoostMeter
     {
         get => boostMeter;
         set
         {
             // don't let boost meter fill beyond capacity
-            if (boostMeter >= BOOST_METER_CAPACITY)
+            if (value != 0 && boostMeter >= BOOST_METER_CAPACITY)
                 return;
             boostMeter = value;
+
+            // update visuals for player shader
+            visuals?.UpdatePowerupVisual(boostMeter, BOOST_METER_CAPACITY);
         }
+    }
+
+    private void Start()
+    {
+        visuals = GetComponent<PlayerVisuals>();
     }
 
     public void Boost()
@@ -40,7 +50,7 @@ public class PlayerBoost : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.AddForce(transform.up * thrust);
 
-        boostMeter = 0;
+        BoostMeter = 0;
     }
 
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
@@ -117,23 +116,23 @@ public class LevelGenerator : MonoBehaviour
 
         if (totalPlatformsTouched > LEVEL_3_COUNT)
         {
-            Debug.Log("LVL 3");
-            if (value > 75f)
-            {
-                return movingPlatform;
-            }
-            else if (value > 25f)
-            {
-                return fallingPlatform;
-            }
-            return basicPlatform;
+            // for now to avoid bug with moving platforms
+            return fallingPlatform;
+
+            //if (value > 25f)
+            //{
+            //    return movingPlatform;
+            //}
+            //else if (value > 10f)
+            //{
+            //    return fallingPlatform;
+            //}
+            //return basicPlatform;
         }
         else
         if (totalPlatformsTouched > LEVEL_2_COUNT)
         {
-
-            Debug.Log("LVL 2");
-            if (value > 75f)
+            if (value > 50f)
             {
                 return fallingPlatform;
             }

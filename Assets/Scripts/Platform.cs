@@ -15,17 +15,17 @@ public class Platform : MonoBehaviour
 
     protected virtual void OnCollisionEnter2D(Collision2D other)
 	{
-		//other.gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * thrust);
 		other.gameObject.GetComponent<PlayerBouncer>().Bounce();
 
-		PlayerBoost playerBoost = other.gameObject.GetComponent<PlayerBoost>();
-		if (playerBoost != null)
-        {
-			playerBoost.BoostMeter += boostValue;
-        }
-
+		// if already touched, don't want to count as new platform touched or increase boost meter
 		if (!touched)
 		{
+			PlayerBoost playerBoost = other.gameObject.GetComponent<PlayerBoost>();
+			if (playerBoost != null)
+			{
+				playerBoost.BoostMeter += boostValue;
+			}
+
 			UpdatePlatformsTouched();
 			touched = true;
 		}
