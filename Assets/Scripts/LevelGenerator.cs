@@ -112,32 +112,29 @@ public class LevelGenerator : MonoBehaviour
 
     public GameObject GetPlatform()
     {
-        float value = Random.Range(0f, 100f);
+        //float value = Random.Range(0f, 100f);
 
-        if (totalPlatformsTouched > LEVEL_3_COUNT)
-        {
-            // for now to avoid bug with moving platforms
-            return fallingPlatform;
-
-            //if (value > 25f)
-            //{
-            //    return movingPlatform;
-            //}
-            //else if (value > 10f)
-            //{
-            //    return fallingPlatform;
-            //}
-            //return basicPlatform;
-        }
-        else
-        if (totalPlatformsTouched > LEVEL_2_COUNT)
-        {
-            if (value > 50f)
-            {
-                return fallingPlatform;
-            }
-            return basicPlatform;
-        }
+        //if (totalPlatformsTouched > LEVEL_3_COUNT)
+        //{
+        //    if (value > 25f)
+        //    {
+        //        return movingPlatform;
+        //    }
+        //    else if (value > 10f)
+        //    {
+        //        return fallingPlatform;
+        //    }
+        //    return basicPlatform;
+        //}
+        //else
+        //if (totalPlatformsTouched > LEVEL_2_COUNT)
+        //{
+        //    if (value > 50f)
+        //    {
+        //        return fallingPlatform;
+        //    }
+        //    return basicPlatform;
+        //}
 
         return basicPlatform;
     }

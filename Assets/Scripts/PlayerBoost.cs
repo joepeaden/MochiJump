@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerBoost : MonoBehaviour
 {
@@ -13,6 +14,15 @@ public class PlayerBoost : MonoBehaviour
     private int boostMeter = 0;
 
     private PlayerVisuals visuals;
+    
+    private Image boostButtonRenderer;
+
+    [SerializeField]
+    // for filling the boost meter for debugging
+    private bool fillBoostMeter;
+
+    [SerializeField]
+    private GameObject boostBurst;
 
     public int BoostMeter
     {
@@ -26,12 +36,20 @@ public class PlayerBoost : MonoBehaviour
 
             // update visuals for player shader
             visuals?.UpdatePowerupVisual(boostMeter, BOOST_METER_CAPACITY);
+
+            // update boost button shader
+            // i feel pretty bad about this implementation. but whatever. 2 beers in, les go
+            boostButtonRenderer.material.SetFloat("_BoostMeter", ((float) boostMeter )/ ((float) BOOST_METER_CAPACITY));
         }
     }
 
     private void Start()
     {
         visuals = GetComponent<PlayerVisuals>();
+        boostButtonRenderer = GameObject.FindGameObjectWithTag("BoostButton").GetComponent<Image>();
+
+        if (fillBoostMeter)
+            BoostMeter = BOOST_METER_CAPACITY;
     }
 
     public void Boost()
@@ -49,6 +67,8 @@ public class PlayerBoost : MonoBehaviour
 
         rb.velocity = Vector3.zero;
         rb.AddForce(transform.up * thrust);
+
+        Instantiate(boostBurst, transform.position, Quaternion.identity);
 
         BoostMeter = 0;
     }

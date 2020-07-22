@@ -65,7 +65,7 @@ public class Floor : MovingObject
 		}
         
         // clean up old platforms as they are passed
-        if(other.tag == "Platform")
+        if(other.tag == "Platform" || other.tag == "BoostEmitter")
         {
             Destroy(other.gameObject);
         }
