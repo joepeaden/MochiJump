@@ -19,7 +19,7 @@ public class PlayerBoost : MonoBehaviour
 
     [SerializeField]
     // for filling the boost meter for debugging
-    private bool fillBoostMeter;
+    private bool infiniteBoost;
 
     [SerializeField]
     private GameObject boostBurst;
@@ -47,15 +47,12 @@ public class PlayerBoost : MonoBehaviour
     {
         visuals = GetComponent<PlayerVisuals>();
         boostButtonRenderer = GameObject.FindGameObjectWithTag("BoostButton").GetComponent<Image>();
-
-        if (fillBoostMeter)
-            BoostMeter = BOOST_METER_CAPACITY;
     }
 
     public void Boost()
     {
         // only launch if boost meter is full
-        if(boostMeter != BOOST_METER_CAPACITY)
+        if(!infiniteBoost && boostMeter != BOOST_METER_CAPACITY)
         {
             return;
         }

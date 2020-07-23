@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boostThrust: 400
-  fillBoostMeter: 1
+  fillBoostMeter: 0
   boostBurst: {fileID: 1101377988687188668, guid: dc46700e8d4a8c54fa5a7547e8847043,
     type: 3}
 --- !u!114 &-616011055207289761

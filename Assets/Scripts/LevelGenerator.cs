@@ -1,12 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
+    [SerializeField]
+    private bool generateLevel = true;
+
 	private GameObject environment, mainCamera;
 
-    private GameObject basicPlatform, fallingPlatform, movingPlatform, bounceUpPlatform;
+    [SerializeField]
+    private GameObject level1Platform, level2Platform, level3Platform, level4Platform;
 
     // would be const but need to set from editor
     public float LEVEL_2_COUNT;
@@ -21,11 +26,6 @@ public class LevelGenerator : MonoBehaviour
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
-        basicPlatform = Resources.Load<GameObject>("Prefabs/Platforms/BasicPlatform");
-        fallingPlatform = Resources.Load<GameObject>("Prefabs/Platforms/FallingPlatform");
-        movingPlatform = Resources.Load<GameObject>("Prefabs/Platforms/MovingPlatform");
-        bounceUpPlatform = Resources.Load<GameObject>("Prefabs/Platforms/BounceUp");
-
         environment = new GameObject("Environment");
     
         GeneratePlatform(true);
@@ -33,6 +33,10 @@ public class LevelGenerator : MonoBehaviour
     
     public void GeneratePlatform(bool gameStart)
     {
+        // for debugging purposes
+        if (!generateLevel)
+            return;
+
         // need size to spawn for length of camera
         float sizeX = mainCamera.GetComponent<Camera>().orthographicSize;
 
@@ -46,7 +50,7 @@ public class LevelGenerator : MonoBehaviour
 
         // float[] posx for the # of platforms decided at this height lvl
         // positions for spawning platform
-        float posx = Random.Range(-range, range);
+        float posx = UnityEngine.Random.Range(-range, range);
         float posy = lastPlatPos + spacing;
 
         GameObject platform;
@@ -58,7 +62,7 @@ public class LevelGenerator : MonoBehaviour
         {
             GameObject currentPlatform = Instantiate(platform, new Vector3(posx, posy, 0), Quaternion.identity, environment.transform);
 
-            currentPlatform.GetComponentInChildren<Platform>().UpdatePlatformsTouched = UpdatePlatformsTouched;
+            //currentPlatform.GetComponentInChildren<Platform>().UpdatePlatformsTouched = UpdatePlatformsTouched;
 
             // save last position to make new platform in correct place
             lastPlatPos = currentPlatform.transform.position.y;
@@ -66,13 +70,13 @@ public class LevelGenerator : MonoBehaviour
         else
         {
             // spawn initial platform
-            GameObject currentPlatform = Instantiate(basicPlatform, new Vector3(0f, -1.5f, 0f), Quaternion.identity, environment.transform);
-            currentPlatform.GetComponentInChildren<Platform>().UpdatePlatformsTouched = UpdatePlatformsTouched;
+            GameObject currentPlatform = Instantiate(level1Platform, new Vector3(0f, -1.5f, 0f), Quaternion.identity, environment.transform);
+            //currentPlatform.GetComponentInChildren<Platform>().UpdatePlatformsTouched = UpdatePlatformsTouched;
 
             // if at game start, then spawn collection of platforms
             for (int i = 0; i < sizeY; i++)
             {
-                posx = Random.Range(-range, range);
+                posx = UnityEngine.Random.Range(-range, range);
                 posy = 0 + i;
 
                 // every <spacing value> units, spawn a platform with a random x position
@@ -81,7 +85,7 @@ public class LevelGenerator : MonoBehaviour
                     // put all of the platforms under the environment parent object
                     currentPlatform = Instantiate(platform, new Vector3(posx, posy, 0), Quaternion.identity, environment.transform);
 
-                    currentPlatform.GetComponentInChildren<Platform>().UpdatePlatformsTouched = UpdatePlatformsTouched;
+                    //currentPlatform.GetComponentInChildren<Platform>().UpdatePlatformsTouched = UpdatePlatformsTouched;
                 }
 
                 // save last position to make new platform in correct place
@@ -118,24 +122,24 @@ public class LevelGenerator : MonoBehaviour
         //{
         //    if (value > 25f)
         //    {
-        //        return movingPlatform;
+        //        return level3Platform;
         //    }
         //    else if (value > 10f)
         //    {
-        //        return fallingPlatform;
+        //        return level2Platform;
         //    }
-        //    return basicPlatform;
+        //    return level1Platform;
         //}
         //else
         //if (totalPlatformsTouched > LEVEL_2_COUNT)
         //{
         //    if (value > 50f)
         //    {
-        //        return fallingPlatform;
+        //        return level2Platform;
         //    }
-        //    return basicPlatform;
+        //    return level1Platform;
         //}
 
-        return basicPlatform;
+        return level1Platform;
     }
 }

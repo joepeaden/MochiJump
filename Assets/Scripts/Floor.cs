@@ -51,9 +51,9 @@ public class Floor : MovingObject
 
     private void UpdateSpeed()
     {
-        // good enough for now!
-        //float increment = 0.001f;
-        //speed += increment;        
+        // needs work
+        float increment = 0.001f;
+        speed += increment;
     }
 
 	private void OnTriggerEnter2D(Collider2D other)
