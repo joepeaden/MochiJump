@@ -6,7 +6,8 @@ public class LevelGenerator : MonoBehaviour
 {
 	private GameObject environment, mainCamera;
 
-    private GameObject basicPlatform, fallingPlatform, movingPlatform, bounceUpPlatform;
+    [SerializeField]
+    private GameObject level1Platform, level2Platform, level3Platform, level4Platform;
 
     // would be const but need to set from editor
     public float LEVEL_2_COUNT;
@@ -17,14 +18,13 @@ public class LevelGenerator : MonoBehaviour
 
     private float lastPlatPos;
 
+    // for debugging, don't generate level except for initial platform
+    [SerializeField]
+    private bool generateLevel;
+
     void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-
-        basicPlatform = Resources.Load<GameObject>("Prefabs/Platforms/BasicPlatform");
-        fallingPlatform = Resources.Load<GameObject>("Prefabs/Platforms/FallingPlatform");
-        movingPlatform = Resources.Load<GameObject>("Prefabs/Platforms/MovingPlatform");
-        bounceUpPlatform = Resources.Load<GameObject>("Prefabs/Platforms/BounceUp");
 
         environment = new GameObject("Environment");
     
@@ -53,8 +53,37 @@ public class LevelGenerator : MonoBehaviour
 
         platform = GetPlatform();
 
+        if(gameStart)
+        {
+            // spawn initial platform
+            GameObject currentPlatform = Instantiate(level1Platform, new Vector3(0f, -1.5f, 0f), Quaternion.identity, environment.transform);
+            currentPlatform.GetComponentInChildren<Platform>().UpdatePlatformsTouched = UpdatePlatformsTouched;
+
+            if(generateLevel)
+            {
+                // if at game start, then spawn collection of platforms
+                for (int i = 0; i < sizeY; i++)
+                {
+                    posx = Random.Range(-range, range);
+                    posy = 0 + i;
+
+                    // every <spacing value> units, spawn a platform with a random x position
+                    if (i % spacing == 0 && i != 0)
+                    {
+                        // put all of the platforms under the environment parent object
+                        currentPlatform = Instantiate(platform, new Vector3(posx, posy, 0), Quaternion.identity, environment.transform);
+
+                        currentPlatform.GetComponentInChildren<Platform>().UpdatePlatformsTouched = UpdatePlatformsTouched;
+                    }
+
+                    // save last position to make new platform in correct place
+                    if (currentPlatform != null)
+                        lastPlatPos = currentPlatform.transform.position.y;
+                }
+            }
+        }
         // if not at game start, just spawn a single platform, then break 
-        if (!gameStart)
+        else if (generateLevel)
         {
             GameObject currentPlatform = Instantiate(platform, new Vector3(posx, posy, 0), Quaternion.identity, environment.transform);
 
@@ -62,32 +91,6 @@ public class LevelGenerator : MonoBehaviour
 
             // save last position to make new platform in correct place
             lastPlatPos = currentPlatform.transform.position.y;
-        }
-        else
-        {
-            // spawn initial platform
-            GameObject currentPlatform = Instantiate(basicPlatform, new Vector3(0f, -1.5f, 0f), Quaternion.identity, environment.transform);
-            currentPlatform.GetComponentInChildren<Platform>().UpdatePlatformsTouched = UpdatePlatformsTouched;
-
-            // if at game start, then spawn collection of platforms
-            for (int i = 0; i < sizeY; i++)
-            {
-                posx = Random.Range(-range, range);
-                posy = 0 + i;
-
-                // every <spacing value> units, spawn a platform with a random x position
-                if (i % spacing == 0 && i != 0)
-                {
-                    // put all of the platforms under the environment parent object
-                    currentPlatform = Instantiate(platform, new Vector3(posx, posy, 0), Quaternion.identity, environment.transform);
-
-                    currentPlatform.GetComponentInChildren<Platform>().UpdatePlatformsTouched = UpdatePlatformsTouched;
-                }
-
-                // save last position to make new platform in correct place
-                if (currentPlatform != null)
-                    lastPlatPos = currentPlatform.transform.position.y;
-            }
         }
     }
 
@@ -118,24 +121,24 @@ public class LevelGenerator : MonoBehaviour
         //{
         //    if (value > 25f)
         //    {
-        //        return movingPlatform;
+        //        return level3Platform;
         //    }
         //    else if (value > 10f)
         //    {
-        //        return fallingPlatform;
+        //        return level2Platform;
         //    }
-        //    return basicPlatform;
+        //    return level1Platform;
         //}
         //else
         //if (totalPlatformsTouched > LEVEL_2_COUNT)
         //{
         //    if (value > 50f)
         //    {
-        //        return fallingPlatform;
+        //        return level2Platform;
         //    }
-        //    return basicPlatform;
+        //    return level1Platform;
         //}
 
-        return basicPlatform;
+        return level1Platform;
     }
 }
