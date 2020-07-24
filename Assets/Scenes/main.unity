@@ -895,6 +895,29 @@ PrefabInstance:
       propertyPath: LEVEL_3_COUNT
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: level1Platform
+      value: 
+      objectReference: {fileID: 2516175139688597866, guid: 8f3f6042079b9dc4b84068683fdba7e6,
+        type: 3}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: level2Platform
+      value: 
+      objectReference: {fileID: 6718069453754691488, guid: d1fceb26c586e974aa036525cbcc268c,
+        type: 3}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: level3Platform
+      value: 
+      objectReference: {fileID: 4577301824068835110, guid: 121cd64218608e84b8ceaad708b075bf,
+        type: 3}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: generateLevel
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 404520020985811141, guid: f47f623c172c7fc43ac577a205189717,
         type: 3}
       propertyPath: m_Name
