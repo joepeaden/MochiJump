@@ -2,29 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Platform : MonoBehaviour
+public class Bumper : MonoBehaviour
 {
 	[SerializeField]
 	protected int boostValue = 1;
 
 	// delegate for updating level generator when platform is touched
-	public delegate void Callback();
-	public Callback UpdatePlatformsTouched;
+	//public delegate void Callback();
+	//public Callback UpdatePlatformsTouched;
+
+	public Vector3 fieldEntryPoint;
 
 	private bool touched;
 
 	private GameObject parentGO;
 
-    private void Start()
-    {
-		// set up this way cause need platform to be solid but not bounce players off sides, for example
-		parentGO = transform.parent.gameObject;
-    }
-
-    protected virtual void OnCollisionEnter2D(Collision2D other)
+	private void Start()
 	{
-		// for now, just using zero to not make calculations
-		other.gameObject.GetComponent<PlayerBouncer>()?.Bounce(Vector3.zero);
+		// set up this way to control what parts of the platform the player bounces off of
+		parentGO = transform.parent.gameObject;
+	}
+
+	protected virtual void OnCollisionEnter2D(Collision2D other)
+	{
+		other.gameObject.GetComponent<PlayerBouncer>()?.Bounce(fieldEntryPoint, true);
 
 		// if already touched, don't want to count as new platform touched or increase boost meter
 		if (!touched)
@@ -35,7 +36,7 @@ public class Platform : MonoBehaviour
 				playerBoost.BoostMeter += boostValue;
 			}
 
-			UpdatePlatformsTouched();
+			//UpdatePlatformsTouched();
 			touched = true;
 
 			PingFeedback();
@@ -43,9 +44,7 @@ public class Platform : MonoBehaviour
 	}
 
 	private void PingFeedback()
-    {
+	{
 		parentGO.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
-
-    }
-
+	}
 }

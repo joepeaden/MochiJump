@@ -115,7 +115,7 @@ public class LevelGenerator : MonoBehaviour
 
     public GameObject GetPlatform()
     {
-        //float value = Random.Range(0f, 100f);
+        float value = Random.Range(0f, 100f);
 
         //if (totalPlatformsTouched > LEVEL_3_COUNT)
         //{
@@ -130,14 +130,14 @@ public class LevelGenerator : MonoBehaviour
         //    return level1Platform;
         //}
         //else
-        //if (totalPlatformsTouched > LEVEL_2_COUNT)
-        //{
-        //    if (value > 50f)
-        //    {
-        //        return level2Platform;
-        //    }
-        //    return level1Platform;
-        //}
+        if (totalPlatformsTouched > LEVEL_2_COUNT)
+        {
+            if (value > 50f)
+            {
+                return level2Platform;
+            }
+            return level1Platform;
+        }
 
         return level1Platform;
     }
