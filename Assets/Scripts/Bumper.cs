@@ -2,49 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bumper : MonoBehaviour
+public class Bumper : EnvironmentObject
 {
-	[SerializeField]
-	protected int boostValue = 1;
-
-	// delegate for updating level generator when platform is touched
-	//public delegate void Callback();
-	//public Callback UpdatePlatformsTouched;
-
 	public Vector3 fieldEntryPoint;
 
-	private bool touched;
+    protected void Start()
+    {
+		base.Start();
+		type = EOType.Bumper;
+    }
 
-	private GameObject parentGO;
-
-	private void Start()
+    protected virtual void OnCollisionEnter2D(Collision2D other)
 	{
-		// set up this way to control what parts of the platform the player bounces off of
-		parentGO = transform.parent.gameObject;
-	}
-
-	protected virtual void OnCollisionEnter2D(Collision2D other)
-	{
-		other.gameObject.GetComponent<PlayerBouncer>()?.Bounce(fieldEntryPoint, true);
-
-		// if already touched, don't want to count as new platform touched or increase boost meter
-		if (!touched)
+		if (other.gameObject.tag == "Player")
 		{
-			PlayerBoost playerBoost = other.gameObject.GetComponent<PlayerBoost>();
-			if (playerBoost != null)
+			other.gameObject.GetComponent<PlayerBouncer>()?.Bounce(fieldEntryPoint, true);
+
+			// if already touched, don't want to count as new platform touched or increase boost meter
+			if (!touched)
 			{
-				playerBoost.BoostMeter += boostValue;
+				PlayerBoost playerBoost = other.gameObject.GetComponent<PlayerBoost>();
+				if (playerBoost != null)
+				{
+					playerBoost.BoostMeter += boostValue;
+				}
+
+				UpdateEOTouched();
+				touched = true;
+
+				PingFeedback(true);
 			}
-
-			//UpdatePlatformsTouched();
-			touched = true;
-
-			PingFeedback();
+			else
+			{
+				PingFeedback();
+			}
 		}
-	}
-
-	private void PingFeedback()
-	{
-		parentGO.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
 	}
 }

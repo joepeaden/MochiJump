@@ -89,7 +89,7 @@ public class Player : MovingObject
 
 		// regenerate level
 		levelGenerator.ClearEnvironment();
-		levelGenerator.GeneratePlatform(true);
+		levelGenerator.GenerateEO(true);
 	}
 
 	private void UpdateStats()
