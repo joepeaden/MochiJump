@@ -25,7 +25,7 @@ public class Bounds : MonoBehaviour
 	private void TeleportPlayer(GameObject playerObject)
     {
 		BoxCollider2D box = GetComponent<BoxCollider2D>();
-		float posx = (box.size.x / 2) + 1;
+		float posx = (box.size.x / 2);
 
 		Transform tf = playerObject.gameObject.transform;
 

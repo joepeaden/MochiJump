@@ -71,8 +71,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boostValue: 1
+  pointValue: 10
   highping: {fileID: 7240890825903782483}
   lowping: {fileID: 2268128544341852699}
+  ui: {fileID: 0}
   type: 0
 --- !u!1 &2516175139688597866
 GameObject:

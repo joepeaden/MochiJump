@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boostValue: 1
+  pointValue: 30
   highping: {fileID: 8724079284818355231}
   lowping: {fileID: 150002868479040599}
+  ui: {fileID: 0}
   type: 0
   speed: 5
 --- !u!1001 &2120887787603369548

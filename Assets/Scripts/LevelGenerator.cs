@@ -28,6 +28,12 @@ public class LevelGenerator : MonoBehaviour
     // used for debugging
     private int totalEOSpawned;
 
+    [SerializeField]
+    private UIManager ui;
+
+    [SerializeField]
+    private Player player;
+
     void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -64,7 +70,9 @@ public class LevelGenerator : MonoBehaviour
         {
             // spawn initial environmentObject
             currentEO = Instantiate(level1Platform, new Vector3(0f, -1.5f, 0f), Quaternion.identity, environment.transform);
-            currentEO.GetComponentInChildren<EnvironmentObject>().UpdateEOTouched = UpdateEOTouched;
+            EnvironmentObject eo_Script = currentEO.GetComponentInChildren<EnvironmentObject>();
+            eo_Script.UpdateEOTouched = UpdateEOTouched;
+            eo_Script.ui = ui;
 
             totalEOSpawned++;
 
@@ -82,7 +90,9 @@ public class LevelGenerator : MonoBehaviour
                         // put all of the environmentObjects under the environment parent object
                         currentEO = Instantiate(environmentObject, new Vector3(posx, posy, 0), Quaternion.identity, environment.transform);
 
-                        currentEO.GetComponentInChildren<EnvironmentObject>().UpdateEOTouched = UpdateEOTouched;
+                        eo_Script = currentEO.GetComponentInChildren<EnvironmentObject>();
+                        eo_Script.UpdateEOTouched = UpdateEOTouched;
+                        eo_Script.ui = ui;
 
                         totalEOSpawned++;
                     }
@@ -100,6 +110,7 @@ public class LevelGenerator : MonoBehaviour
 
             EnvironmentObject eo_Script = currentEO.GetComponentInChildren<EnvironmentObject>();
             eo_Script.UpdateEOTouched = UpdateEOTouched;
+            eo_Script.ui = ui;
 
             // lanes need to orient themselves based on prev object position
             PinballLane lane = currentEO.GetComponent<PinballLane>();
@@ -126,9 +137,10 @@ public class LevelGenerator : MonoBehaviour
     }
 
     // Will be updated by environmentObjects when they are touched by player.
-    public void UpdateEOTouched()
+    public void UpdateEOTouched(int pointValue)
     {
         totalEOTouched++;
+        player.AddPoints(pointValue);
     }
 
     public void ClearEnvironment()

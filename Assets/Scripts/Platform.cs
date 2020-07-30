@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class Platform : EnvironmentObject
@@ -26,8 +27,9 @@ public class Platform : EnvironmentObject
 					playerBoost.BoostMeter += boostValue;
 				}
 
-				UpdateEOTouched();
+				UpdateEOTouched(pointValue);
 				touched = true;
+
 				PingFeedback(true);
 			}
 			else

@@ -27,7 +27,7 @@ public class Bumper : EnvironmentObject
 					playerBoost.BoostMeter += boostValue;
 				}
 
-				UpdateEOTouched();
+				UpdateEOTouched(pointValue);
 				touched = true;
 
 				PingFeedback(true);

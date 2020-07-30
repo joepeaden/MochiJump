@@ -10,25 +10,18 @@ public class Player : MovingObject
 {
 	private InputHandler inputHandler;
 	private int score = 0;
-	private Text scoreText;
-	private GameObject restartButton;
 	private LevelGenerator levelGenerator;
+
+	[SerializeField]
+	private UIManager ui;
+
+	private float maxHeight;
 
 	void Start()
 	{
 		inputHandler = GetComponent<InputHandler>();
 
 		levelGenerator = GameObject.FindGameObjectWithTag("LevelGenerator").GetComponent<LevelGenerator>();
-
-		// hopefully throwing these errors will help with debugging
-		scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<Text>();
-		if(scoreText == null)
-			Debug.LogError("Player -> Start: Score text not found");
-       
-        restartButton = GameObject.FindGameObjectWithTag("RestartButton");
-		if(restartButton == null)
-			Debug.LogError("Player -> Start: Restart button not found");
-		restartButton.SetActive(false);
 	}
 
 	void Update()
@@ -42,45 +35,34 @@ public class Player : MovingObject
 
 		// update score
 		int currentHeight = (int) GetComponent<Transform>().position.y;
-		if(currentHeight > score)
+		if(currentHeight > maxHeight)
 		{
-			score = currentHeight;
-			UpdateStats();
+			// add difference to score
+			score += (int) (currentHeight - maxHeight);
+
+			maxHeight = currentHeight;
+
+
+			ui.UpdateStats(score);
 		}
 	}
 
 	public void GameOver()
 	{
-		// enable restart game modal
-		restartButton.SetActive(true);
-
-		// set player back to original position to stop continual play after game over
-		// ---- PROBLEM with this fix: if player dies early, will just respawn instantly and see it ----
-		// Reset();
-
-		// updating final score text
-		Text finalScoreText = GameObject.FindGameObjectWithTag("FinalScoreText").GetComponent<Text>();
-		if(finalScoreText == null)
-		{
-			Debug.LogError("Player -> GameOver: Final score text not found");
-			return;
-		}
-
-		finalScoreText.text = "Final Score: " + score;
+		ui.GameOver(score);
 	}
 
 	public void ResetGame()
 	{
 		// reset score to zero and update UI
 		score = 0;
-		UpdateStats();
+		ui.UpdateStats(score);
 
 		// reset gameplay effects
 		GetComponent<PlayerBoost>().BoostMeter = 0;
 		GetComponent<PlayerBouncer>().Reset();
 
-		// turn off modal
-		restartButton.SetActive(false);
+		ui.Reset();
 
 		// reset all moving objects in scene
 		MovingObject[] movingObjects = FindObjectsOfType<MovingObject>();
@@ -92,8 +74,9 @@ public class Player : MovingObject
 		levelGenerator.GenerateEO(true);
 	}
 
-	private void UpdateStats()
-	{
-		scoreText.text = "Score: " + score;
-	}
+	public void AddPoints(int points)
+    {
+		score += points;
+		ui.UpdateStats(score);
+    }
 }

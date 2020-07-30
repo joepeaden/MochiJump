@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boostValue: 1
+  pointValue: 20
   highping: {fileID: 1994127828288576665}
   lowping: {fileID: 6965482588904760529}
+  ui: {fileID: 0}
   type: 0
 --- !u!1001 &9209966131119236810
 PrefabInstance:

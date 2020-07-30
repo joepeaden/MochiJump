@@ -7,9 +7,11 @@ public class EnvironmentObject : MonoBehaviour
 {
 	[SerializeField]
 	protected int boostValue = 1;
+	[SerializeField]
+	protected int pointValue;
 
 	// delegate for updating level generator when platform is touched
-	public delegate void Callback();
+	public delegate void Callback(int value);
 	public Callback UpdateEOTouched;
 
 	protected bool touched;
@@ -18,6 +20,8 @@ public class EnvironmentObject : MonoBehaviour
 
 	public AudioSource highping;
 	public AudioSource lowping;
+
+	public UIManager ui;
 
 	public enum EOType
     {
@@ -38,6 +42,7 @@ public class EnvironmentObject : MonoBehaviour
 		{
 			parentGO.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
 			highping.Play();
+			ui.EOPointNotification(pointValue);
 		}
 		else
         {
