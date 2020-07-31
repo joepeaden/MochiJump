@@ -1,13 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Floor : MovingObject
 {
     // for debugging purposes
+    [Header("Debugging")]
     [SerializeField]
     private bool move = true;
+    [SerializeField]
+    private bool accelerate = true;
 
+    [Header("Speed Variables")]
     // how fast camera catches up when player is ahead
     [SerializeField]
     private float catchupSpeed;
@@ -15,10 +20,13 @@ public class Floor : MovingObject
     [SerializeField]
     private float speed = 1.5f;
 
+    [SerializeField]
+    private float floorAcceleration = 0.001f;
+
     private Transform playerTf;
     private float catchupHeight = 10;
     private Transform cameraTf;
-    
+
 	void Start()
 	{
 		SetStartPosition(transform.position);
@@ -52,8 +60,12 @@ public class Floor : MovingObject
     private void UpdateSpeed()
     {
         // good enough for now!
-        //float increment = 0.001f;
-        //speed += increment;        
+        if (accelerate)
+        {
+            floorAcceleration = 0.001f;
+            speed += floorAcceleration;
+
+        }
     }
 
 	private void OnTriggerEnter2D(Collider2D other)

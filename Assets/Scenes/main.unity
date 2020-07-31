@@ -1145,6 +1145,11 @@ PrefabInstance:
       propertyPath: ui
       value: 
       objectReference: {fileID: 493413918}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1543791474}
     - target: {fileID: 404520020985811141, guid: f47f623c172c7fc43ac577a205189717,
         type: 3}
       propertyPath: m_Name
@@ -1588,6 +1593,11 @@ PrefabInstance:
       propertyPath: fillBoostMeter
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9213945994531855604, guid: 2195b23a1faf7d84b93157a29f401f38,
+        type: 3}
+      propertyPath: ui
+      value: 
+      objectReference: {fileID: 493413918}
     - target: {fileID: 9213945994531855606, guid: 2195b23a1faf7d84b93157a29f401f38,
         type: 3}
       propertyPath: m_LocalPosition.x
