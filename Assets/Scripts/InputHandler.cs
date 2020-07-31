@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class InputHandler : MonoBehaviour
 {
-	Command leftButton;
-	Command rightButton;
+	GoLeftCommand leftButton;
+	GoRightCommand rightButton;
+
+    public float moveForce;
 
 	public void Start()
 	{
@@ -15,7 +17,9 @@ public class InputHandler : MonoBehaviour
 	public void SetupInput()
 	{
 		leftButton = new GoLeftCommand();
-		rightButton = new GoRightCommand();
+        leftButton.moveForce = moveForce;
+        rightButton = new GoRightCommand();
+        rightButton.moveForce = moveForce;
 	}
 
 	public Command HandleInput()

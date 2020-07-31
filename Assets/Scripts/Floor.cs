@@ -15,6 +15,9 @@ public class Floor : MovingObject
     [SerializeField]
     private float speed = 1.5f;
 
+    [SerializeField]
+    private float speedIncreaseIncrement= 0.001f;
+
     private Transform playerTf;
     private float catchupHeight = 10;
     private Transform cameraTf;
@@ -52,8 +55,8 @@ public class Floor : MovingObject
     private void UpdateSpeed()
     {
         // good enough for now!
-        //float increment = 0.001f;
-        //speed += increment;        
+        
+        speed += speedIncreaseIncrement;
     }
 
 	private void OnTriggerEnter2D(Collider2D other)

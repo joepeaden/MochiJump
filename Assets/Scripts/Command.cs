@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// I really don't think doing it this way was necessary. Oh well, guess I was trying to learn
+
 public interface Command
 {
 	void Execute(GameObject gameObject);
@@ -9,6 +11,8 @@ public interface Command
 
 public class GoLeftCommand : MonoBehaviour, Command
 {
+	public float moveForce;
+
 	public void Execute(GameObject gameObject)
 	{
 		Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
@@ -17,7 +21,7 @@ public class GoLeftCommand : MonoBehaviour, Command
 		if(rb != null && tf != null)
 		{
 			//tf.Translate(-10 * Time.deltaTime, 0, 0);
-			rb.AddForce(-tf.right * 10);
+			rb.AddForce(-tf.right * moveForce);
 		}
 		else
 			Debug.LogError("GoLeftCommand: rb or tf not found");
@@ -27,6 +31,7 @@ public class GoLeftCommand : MonoBehaviour, Command
 
 public class GoRightCommand : Command
 {
+	public float moveForce;
 	public void Execute(GameObject gameObject)
 	{
 		Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
@@ -35,7 +40,7 @@ public class GoRightCommand : Command
 		if(rb != null && tf != null)
 		{
 			//tf.Translate(10 * Time.deltaTime, 0, 0);
-			rb.AddForce(tf.right * 10);
+			rb.AddForce(tf.right * moveForce);
 		}
 		else
 			Debug.LogError("GoRightCommand: rb or tf not found");
