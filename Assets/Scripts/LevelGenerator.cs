@@ -17,7 +17,7 @@ public class LevelGenerator : MonoBehaviour
     // used for level
     private int totalEOTouched;
 
-    private float lastEOPos;
+    private Vector2 lastObjectPosition;
 
     // used for figuring out spacing of spawning next EO
     private EnvironmentObject lastEOSpawned;
@@ -42,7 +42,7 @@ public class LevelGenerator : MonoBehaviour
     
         GenerateEO(true);
     }
-    
+
     // EO for EnvironmentObject, parent of platforms and bumpers etc.
     public void GenerateEO(bool gameStart)
     {
@@ -63,7 +63,19 @@ public class LevelGenerator : MonoBehaviour
         // float[] posx for the # of environmentObjects decided at this height lvl
         // positions for spawning environmentObject
         float posx = Random.Range(-range, range);
-        float posy = lastEOPos + spacing;
+
+        // want pinball lanes to be able to be directly above player
+        // I have a feeling I'm gonna remove pinball lanes...
+        if (environmentObject.GetComponentInChildren<EnvironmentObject>().type != EnvironmentObject.EOType.Bumper)
+        {
+            // don't let platforms spawn directly on top of other platforms
+            while (Mathf.Abs(posx - lastObjectPosition.x) < 4f)
+            {
+                posx = Random.Range(-range, range);
+            }
+        }
+
+        float posy = lastObjectPosition.y + spacing;
 
         GameObject currentEO = null;
         if (gameStart)
@@ -99,7 +111,7 @@ public class LevelGenerator : MonoBehaviour
 
                     // save last position to make new environmentObject in correct place
                     if (currentEO != null)
-                        lastEOPos = currentEO.transform.position.y;
+                        lastObjectPosition = currentEO.transform.position;
                 }
             }
         }
@@ -120,7 +132,7 @@ public class LevelGenerator : MonoBehaviour
             }
 
             // save last position to make new environmentObject in correct place
-            lastEOPos = currentEO.transform.position.y;
+            lastObjectPosition = currentEO.transform.position;
 
             totalEOSpawned++;
         }
