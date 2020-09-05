@@ -1,19 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelGenerator : MonoBehaviour
 {
 	private GameObject environment, mainCamera;
+    
+    public int level;
 
-    [SerializeField]
-    private GameObject level1Platform, level2Platform, level3Platform, level4Platform, pinballLane;
-
-    // would be const but need to set from editor
-    public float LEVEL_2_COUNT;
-    public float LEVEL_3_COUNT;
-    public float LEVEL_4_COUNT;
-
+    // limit for each level, once passed next level will be triggered
+    public int[] levelPlatformTouchedLimits;
+    
+    // platforms, etc. to spawn
+    public GameObject[] environmentObjects;
+    
+    // Used to cache environment objects that are active in current level
+    public GameObject[] levelEnvironmentObjects;
+    
     // used for level
     private int totalEOTouched;
 
@@ -39,13 +44,21 @@ public class LevelGenerator : MonoBehaviour
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
         environment = new GameObject("Environment");
-    
+
+        //SetupPlats();
+
+        InitLevel(true);
+
         GenerateEO(true);
     }
 
     // EO for EnvironmentObject, parent of platforms and bumpers etc.
     public void GenerateEO(bool gameStart)
     {
+        // if there is a next level and we're at the point to transition to next level
+        if ((levelPlatformTouchedLimits.Length-1) > level && totalEOTouched > levelPlatformTouchedLimits[level])
+            InitLevel(false);
+
         // need size to spawn for length of camera
         float sizeX = mainCamera.GetComponent<Camera>().orthographicSize;
 
@@ -81,7 +94,7 @@ public class LevelGenerator : MonoBehaviour
         if (gameStart)
         {
             // spawn initial environmentObject
-            currentEO = Instantiate(level1Platform, new Vector3(0f, -1.5f, 0f), Quaternion.identity, environment.transform);
+            currentEO = Instantiate(environmentObjects[0], new Vector3(0f, -1.5f, 0f), Quaternion.identity, environment.transform);
             EnvironmentObject eo_Script = currentEO.GetComponentInChildren<EnvironmentObject>();
             eo_Script.UpdateEOTouched = UpdateEOTouched;
             eo_Script.ui = ui;
@@ -140,6 +153,29 @@ public class LevelGenerator : MonoBehaviour
         lastEOSpawned = currentEO?.GetComponentInChildren<EnvironmentObject>();
     }
 
+    private void InitLevel(bool gameStart)
+    {
+        // don't want to increase level when at game start
+        if (!gameStart)
+        {
+            level++;
+        }
+
+        List<GameObject> tempList = new List<GameObject>();
+
+        // loop through each environment object and add it to list if it's active
+        foreach (GameObject obj in environmentObjects)
+        {
+            if(obj.GetComponentInChildren<EnvironmentObject>().ActiveInLevel(level))
+            {
+                tempList.Add(obj);
+            }
+        }
+
+        levelEnvironmentObjects = tempList.ToArray();
+
+    }
+
     private int GetEnvironmentObjectSpacing()
     {
         if (lastEOSpawned?.type == EnvironmentObject.EOType.Bumper)
@@ -167,50 +203,34 @@ public class LevelGenerator : MonoBehaviour
 
         totalEOTouched = 0;
         totalEOSpawned = 0;
+        level = 0;
+        InitLevel(true);
     }
 
     public GameObject GetEnvironmentObject()
     {
-        float value = Random.Range(0f, 100f);
+        float total = 0;
 
-        if (totalEOTouched > LEVEL_4_COUNT)
+        foreach (GameObject obj in levelEnvironmentObjects)
         {
-            if(value > 75f)
-            {
-                return pinballLane;
-            }
-            else if (value > 25f)
-            {
-                return level3Platform;
-            }
-            else if (value > 10f)
-            {
-                return level2Platform;
-            }
-            return level1Platform;
-        }
-        if (totalEOTouched > LEVEL_3_COUNT)
-        {
-            if (value > 50f)
-            {
-                return level3Platform;
-            }
-            else if (value > 25f)
-            {
-                return level2Platform;
-            }
-            return level1Platform;
-        }
-        else
-        if (totalEOTouched > LEVEL_2_COUNT)
-        {
-            if (value > 50f)
-            {
-                return level2Platform;
-            }
-            return level1Platform;
+            total += obj.GetComponentInChildren<EnvironmentObject>().SpawnChances[level];
         }
 
-        return level1Platform;
+        float randomPoint = Random.value * total;
+
+        for (int i = 0; i < levelEnvironmentObjects.Length; i++)
+        {
+            EnvironmentObject eoScript = levelEnvironmentObjects[i].GetComponentInChildren<EnvironmentObject>();
+            if (randomPoint < eoScript.SpawnChances[level])
+            {
+                return levelEnvironmentObjects[i];
+            }
+            else
+            {
+                randomPoint -= eoScript.SpawnChances[level];
+            }
+        }
+        return levelEnvironmentObjects[levelEnvironmentObjects.Length - 1];
     }
+
 }

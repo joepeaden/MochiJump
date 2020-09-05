@@ -13,7 +13,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boostValue: 1
-  thrustIncreaseMultiplier: 0.1
+  pointValue: 50
+  highping: {fileID: 573048668297470278}
+  lowping: {fileID: 9004153096597346574}
+  ui: {fileID: 0}
+  type: 0
+  spawnChances:
+  - 0
+  - 0
+  - 0
+  - 0.25
+  thrustIncreaseMultiplier: 0.01
 --- !u!1001 &7174004880237959957
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -99,6 +109,18 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2516175139469532248, guid: 8f3f6042079b9dc4b84068683fdba7e6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8f3f6042079b9dc4b84068683fdba7e6, type: 3}
+--- !u!82 &573048668297470278 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7240890825903782483, guid: 8f3f6042079b9dc4b84068683fdba7e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 7174004880237959957}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &9004153096597346574 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2268128544341852699, guid: 8f3f6042079b9dc4b84068683fdba7e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 7174004880237959957}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4711909357627934543 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2516175139469532250, guid: 8f3f6042079b9dc4b84068683fdba7e6,

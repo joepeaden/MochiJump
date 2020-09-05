@@ -18,6 +18,11 @@ MonoBehaviour:
   lowping: {fileID: 6965482588904760529}
   ui: {fileID: 0}
   type: 0
+  spawnChances:
+  - 0
+  - 0.5
+  - 0.5
+  - 0.5
 --- !u!1001 &9209966131119236810
 PrefabInstance:
   m_ObjectHideFlags: 0

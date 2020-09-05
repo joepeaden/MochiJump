@@ -1083,6 +1083,66 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
         type: 3}
+      propertyPath: lvl1SpawnChance.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: lvl2SpawnChance.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: lvl3SpawnChance.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: lvl4SpawnChance.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: pinballLaneSpawnChance.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: plat1levelsActive.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: pinballLevelsActive.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: plat2levelsActive.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: plat4levelsActive.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: plat3levelsActive.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: levelPlatformTouchedLimits.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: environmentObjects.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
       propertyPath: LEVEL_2_HEIGHT
       value: 50
       objectReference: {fileID: 0}
@@ -1094,7 +1154,7 @@ PrefabInstance:
     - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
         type: 3}
       propertyPath: LEVEL_2_COUNT
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
         type: 3}
@@ -1111,7 +1171,7 @@ PrefabInstance:
         type: 3}
       propertyPath: level2Platform
       value: 
-      objectReference: {fileID: 6718069453754691488, guid: d1fceb26c586e974aa036525cbcc268c,
+      objectReference: {fileID: 4711909357410734719, guid: c2140d55af27e03458a815571233567f,
         type: 3}
     - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
         type: 3}
@@ -1150,6 +1210,105 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1543791474}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: lvl2SpawnChance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: NUMBER_OF_LEVELS
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: lvl1SpawnChance.Array.data[0]
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: plat1levelsActive.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: plat1levelsActive.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: plat1levelsActive.Array.data[2]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: plat1levelsActive.Array.data[3]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: plat1levelsActive.Array.data[4]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: lvl1SpawnChance.Array.data[1]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: plat2levelsActive.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: lvl2SpawnChance.Array.data[1]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: levelPlatformTouchedLimits.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: levelPlatformTouchedLimits.Array.data[1]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: levelPlatformTouchedLimits.Array.data[2]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: environmentObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 2516175139688597866, guid: 8f3f6042079b9dc4b84068683fdba7e6,
+        type: 3}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: environmentObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 4711909357410734719, guid: c2140d55af27e03458a815571233567f,
+        type: 3}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: levelPlatformTouchedLimits.Array.data[3]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: environmentObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 6718069453754691488, guid: d1fceb26c586e974aa036525cbcc268c,
+        type: 3}
+    - target: {fileID: 404520020985811140, guid: f47f623c172c7fc43ac577a205189717,
+        type: 3}
+      propertyPath: environmentObjects.Array.data[3]
+      value: 
+      objectReference: {fileID: 4577301824068835110, guid: 121cd64218608e84b8ceaad708b075bf,
+        type: 3}
     - target: {fileID: 404520020985811141, guid: f47f623c172c7fc43ac577a205189717,
         type: 3}
       propertyPath: m_Name
@@ -1431,6 +1590,11 @@ PrefabInstance:
       propertyPath: catchupSpeed
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4944574944499473145, guid: 9d50a19a2886e81438edfb1de9db2b6d,
+        type: 3}
+      propertyPath: accelerate
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4944574944499473146, guid: 9d50a19a2886e81438edfb1de9db2b6d,
         type: 3}
       propertyPath: m_Name
@@ -1589,9 +1753,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1853466365}
     m_Modifications:
+    - target: {fileID: -616011055207289761, guid: 2195b23a1faf7d84b93157a29f401f38,
+        type: 3}
+      propertyPath: ORIGINAL_THRUST_VALUE
+      value: 1500
+      objectReference: {fileID: 0}
     - target: {fileID: 1354868340, guid: 2195b23a1faf7d84b93157a29f401f38, type: 3}
       propertyPath: fillBoostMeter
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1354868340, guid: 2195b23a1faf7d84b93157a29f401f38, type: 3}
+      propertyPath: boostThrust
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 9213945994531855604, guid: 2195b23a1faf7d84b93157a29f401f38,
         type: 3}
@@ -1656,12 +1829,22 @@ PrefabInstance:
     - target: {fileID: 9213945994531855608, guid: 2195b23a1faf7d84b93157a29f401f38,
         type: 3}
       propertyPath: m_GravityScale
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9213945994531855608, guid: 2195b23a1faf7d84b93157a29f401f38,
         type: 3}
       propertyPath: m_Simulated
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9213945994531855608, guid: 2195b23a1faf7d84b93157a29f401f38,
+        type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9213945994531855608, guid: 2195b23a1faf7d84b93157a29f401f38,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9213945994531855610, guid: 2195b23a1faf7d84b93157a29f401f38,
         type: 3}

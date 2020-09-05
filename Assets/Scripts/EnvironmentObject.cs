@@ -24,11 +24,19 @@ public class EnvironmentObject : MonoBehaviour
 	public UIManager ui;
 
 	public enum EOType
-    {
+	{
 		Platform,
 		Bumper
-    }
+	}
 	public EOType type;
+
+	[Header("Spawning Information")]
+	[SerializeField]
+	private float[] spawnChances;
+	public float[] SpawnChances
+    {
+		get => spawnChances;
+    }
 
 	protected void Start()
 	{
@@ -49,4 +57,12 @@ public class EnvironmentObject : MonoBehaviour
 			lowping.Play();
         }
 	}
+
+	// tells if this object is active in the current level (based on if there's a spawn chance for it or not)
+	public bool ActiveInLevel(int level)
+    {
+		if (level < spawnChances.Length)
+			return true;
+		return false;
+    }
 }

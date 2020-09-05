@@ -17,7 +17,7 @@ public class GoLeftCommand : MonoBehaviour, Command
 		if(rb != null && tf != null)
 		{
 			//tf.Translate(-10 * Time.deltaTime, 0, 0);
-			rb.AddForce(-tf.right * 10);
+			rb.AddForce(-tf.right * 25);
 		}
 		else
 			Debug.LogError("GoLeftCommand: rb or tf not found");
@@ -35,7 +35,7 @@ public class GoRightCommand : Command
 		if(rb != null && tf != null)
 		{
 			//tf.Translate(10 * Time.deltaTime, 0, 0);
-			rb.AddForce(tf.right * 10);
+			rb.AddForce(tf.right * 25);
 		}
 		else
 			Debug.LogError("GoRightCommand: rb or tf not found");
