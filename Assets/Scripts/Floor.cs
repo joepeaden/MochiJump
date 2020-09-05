@@ -17,8 +17,8 @@ public class Floor : MovingObject
     [SerializeField]
     private float catchupSpeed;
 
-    [SerializeField]
-    private float speed = 1.5f;
+    public float startSpeed;
+    private float speed;
 
     [SerializeField]
     private float floorAcceleration = 0.001f;
@@ -33,6 +33,8 @@ public class Floor : MovingObject
 
         playerTf = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         cameraTf = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
+
+        speed = startSpeed;
     }
 
     // call me the rap ASASSINATOR!
@@ -62,9 +64,7 @@ public class Floor : MovingObject
         // good enough for now!
         if (accelerate)
         {
-            floorAcceleration = 0.001f;
             speed += floorAcceleration;
-
         }
     }
 
@@ -94,7 +94,7 @@ public class Floor : MovingObject
 	{
 		base.Reset();
 
-		// reset floor speed
-		speed = 1;
+        // reset floor speed
+        speed = startSpeed;
 	}
 }
