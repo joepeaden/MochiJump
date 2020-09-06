@@ -39,6 +39,9 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     private Player player;
 
+    public bool useDebugPlatform;
+    public GameObject debugPlatform;
+
     void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -79,6 +82,7 @@ public class LevelGenerator : MonoBehaviour
 
         // want pinball lanes to be able to be directly above player
         // I have a feeling I'm gonna remove pinball lanes...
+        // yup didn't use them but yup don't feel like removing them
         if (environmentObject.GetComponentInChildren<EnvironmentObject>().type != EnvironmentObject.EOType.Bumper)
         {
             // don't let platforms spawn directly on top of other platforms
@@ -209,6 +213,9 @@ public class LevelGenerator : MonoBehaviour
 
     public GameObject GetEnvironmentObject()
     {
+        if (useDebugPlatform)
+            return debugPlatform;
+
         float total = 0;
 
         foreach (GameObject obj in levelEnvironmentObjects)
